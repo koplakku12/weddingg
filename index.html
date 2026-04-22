@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Undangan Pernikahan Fauzan & Indah</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Poppins:wght@300;400;600&family=Sacramento&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+    <style>
+        :root {
+            --blue-navy: #3c5a78;
+            --blue-soft: #eaf1f4;
+            --gold: #c5a059;
+            --white: #ffffff;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Poppins', sans-serif; background: #f8fafb; color: #444; overflow-x: hidden; }
+
+        /* --- COVER OVERLAY --- */
+        .cover-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: white; z-index: 9999; display: flex; align-items: center; justify-content: center;
+            background-image: url('https://www.transparentpng.com/download/floral/wedding-floral-decoration-frame-png-free-3.png');
+            background-size: 350px; background-repeat: no-repeat; background-position: top right;
+            transition: 1.5s cubic-bezier(0.7, 0, 0.3, 1); text-align: center;
+        }
+        .cover-content h1 { font-family: 'Playfair Display', serif; color: var(--blue-navy); font-size: 2.8rem; margin: 10px 0; }
+        .subtitle { letter-spacing: 4px; font-size: 0.7rem; color: #888; text-transform: uppercase; }
+
+        /* --- BUTTONS --- */
+        .btn-main { 
+            background: var(--blue-navy); color: white; border: none; padding: 14px 35px; 
+            border-radius: 50px; cursor: pointer; letter-spacing: 1px; font-weight: 600;
+            box-shadow: 0 4px 15px rgba(60, 90, 120, 0.3); transition: 0.3s;
+        }
+
+        /* --- HERO SECTION --- */
+        .hero {
+            height: 100vh; background: linear-gradient(rgba(255,255,255,0.4), rgba(255,255,255,0.4)), 
+            url('https://images.unsplash.com/photo-1511285560929-80b456fea0bc?q=80&w=1000');
+            background-size: cover; background-position: center; display: flex; align-items: center; justify-content: center; text-align: center;
+        }
+        .hero h1 { font-family: 'Sacramento', cursive; font-size: 4.5rem; color: var(--blue-navy); }
+
+        /* --- MEMPELAI --- */
+        .couple { padding: 80px 20px; text-align: center; background: white; }
+        .frame-arch img { 
+            width: 220px; height: 300px; object-fit: cover; 
+            border-radius: 110px 110px 0 0; border: 8px solid #fff; 
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1); 
+        }
+        .divider-ampersand { font-family: 'Sacramento', cursive; font-size: 4rem; color: var(--gold); margin: 25px 0; }
+        h3 { font-family: 'Playfair Display', serif; font-size: 1.8rem; color: var(--blue-navy); margin-top: 15px; }
+
+        /* --- COUNTDOWN --- */
+        .countdown-sec { padding: 50px 20px; background: var(--blue-navy); color: white; text-align: center; }
+        #timer { display: flex; justify-content: center; gap: 15px; margin-top: 20px; }
+        #timer div { background: rgba(255,255,255,0.15); padding: 15px; border-radius: 12px; min-width: 75px; }
+        #timer span { display: block; font-size: 2rem; font-weight: bold; color: var(--gold); }
+
+        /* --- EVENT CARD --- */
+        .events { padding: 60px 20px; }
+        .event-card { 
+            background: white; padding: 40px; border-radius: 25px; margin-bottom: 30px; 
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05); text-align: center;
+            border-top: 5px solid var(--gold);
+        }
+
+        /* --- RSVP & GIFT --- */
+        .gift, .rsvp { padding: 60px 20px; text-align: center; }
+        .bank-card { 
+            background: #fff; padding: 25px; border-radius: 20px; 
+            border: 1px dashed var(--blue-navy); max-width: 350px; margin: 20px auto; 
+        }
+        #rsvp-form input, #rsvp-form select, #rsvp-form textarea { 
+            width: 100%; max-width: 400px; padding: 15px; margin-bottom: 15px; 
+            border: 1px solid #ddd; border-radius: 12px; font-family: inherit;
+        }
+
+        footer { padding: 40px; background: #eee; font-size: 0.8rem; text-align: center; }
+    </style>
+</head>
+<body>
+
+    <div id="music-control" style="position:fixed; bottom:20px; right:20px; z-index:100; display:none;">
+        <button onclick="toggleMusic()" style="background:var(--blue-navy); color:white; border:none; width:50px; height:50px; border-radius:50%; shadow:0 4px 10px rgba(0,0,0,0.2)">
+            <i id="music-icon" class="fas fa-pause"></i>
+        </button>
+    </div>
+
+    <div id="cover" class="cover-overlay">
+        <div class="cover-content">
+            <p class="subtitle">Wedding Invitation</p>
+            <h1>Fauzan & Indah</h1>
+            <p style="margin-top:20px;">Kepada Yth:</p>
+            <h2 id="guest-name" style="margin: 10px 0 30px; font-family: 'Playfair Display';">Tamu Undangan</h2>
+            <button onclick="bukaUndangan()" class="btn-main"><i class="fas fa-envelope-open"></i> BUKA UNDANGAN</button>
+        </div>
+    </div>
+
+    <audio id="bgMusic" loop>
+        <source src="https://www.bensound.com/bensound-music/bensound-love.mp3" type="audio/mpeg">
+    </audio>
+
+    <main id="main-content" style="display:none;">
+        <section class="hero">
+            <div class="hero-inner">
+                <p style="letter-spacing:5px">THE WEDDING OF</p>
+                <h1>Fauzan & Indah</h1>
+                <p style="font-weight:600; color:var(--blue-navy)">26 . 04 . 2026</p>
+            </div>
+        </section>
+
+        <section class="couple">
+            <div class="mempelai-box">
+                <div class="frame-arch">
+                    <img src="https://images.unsplash.com/photo-1583939411023-1478317ad1f9?q=80&w=400" alt="Fauzan">
+                </div>
+                <h3>Fauzan Firmansyah</h3>
+                <p>Putra Kedua dari Bapak Putera & Ibu Puteri</p>
+            </div>
+
+            <div class="divider-ampersand">&</div>
+
+            <div class="mempelai-box">
+                <div class="frame-arch">
+                    <img src="https://images.unsplash.com/photo-1594553258593-3d0859550329?q=80&w=400" alt="Indah">
+                </div>
+                <h3>Indah Permata</h3>
+                <p>Putri Kedua dari Bapak Putera & Ibu Puteri</p>
+            </div>
+        </section>
+
+        <section class="countdown-sec">
+            <h2 style="font-family:'Playfair Display'; margin-bottom:20px;">Menuju Hari Bahagia</h2>
+            <div id="timer">
+                <div><span id="days">00</span><small>Hari</small></div>
+                <div><span id="hours">00</span><small>Jam</small></div>
+                <div><span id="minutes">00</span><small>Menit</small></div>
+                <div><span id="seconds">00</span><small>Detik</small></div>
+            </div>
+        </section>
+
+        <section class="events">
+            <div class="event-card">
+                <h2>Akad Nikah</h2>
+                <p><i class="far fa-calendar-alt"></i> Minggu, 26 April 2026</p>
+                <p><i class="far fa-clock"></i> 10:00 WIB - Selesai</p>
+                <p style="margin-top:10px">Kediaman Mempelai Wanita<br>Sleman, Yogyakarta</p>
+                <button class="btn-main" style="margin-top:20px; padding:10px 20px; font-size:0.8rem;">G-MAPS LOKASI</button>
+            </div>
+        </section>
+
+        <section class="gift">
+            <h2 style="font-family:'Playfair Display'">Wedding Gift</h2>
+            <div class="bank-card">
+                <p><strong>BCA</strong></p>
+                <p style="font-size:1.2rem; letter-spacing:2px; margin:10px 0;">1234567890</p>
+                <p>A.n Indah Permata</p>
+            </div>
+        </section>
+
+        <section class="rsvp">
+            <h2 style="font-family:'Playfair Display'; margin-bottom:20px;">Ucapan & Doa</h2>
+            <form id="rsvp-form">
+                <input type="text" placeholder="Nama Anda" required><br>
+                <select>
+                    <option>Konfirmasi Kehadiran</option>
+                    <option>Hadir</option>
+                    <option>Tidak Hadir</option>
+                </select><br>
+                <textarea placeholder="Tulis doa restu Anda..." rows="4"></textarea><br>
+                <button type="button" class="btn-main">Kirim Ucapan</button>
+            </form>
+        </section>
+
+        <footer>
+            <p>Made with ❤️ made in @rizgotutorial 2025</p>
+        </footer>
+    </main>
+
+    <script>
+        const music = document.getElementById('bgMusic');
+        const icon = document.getElementById('music-icon');
+
+        function bukaUndangan() {
+            document.getElementById('cover').style.transform = 'translateY(-100%)';
+            document.getElementById('main-content').style.display = 'block';
+            document.getElementById('music-control').style.display = 'block';
+            music.play();
+        }
+
+        function toggleMusic() {
+            if (music.paused) {
+                music.play();
+                icon.className = 'fas fa-pause';
+            } else {
+                music.pause();
+                icon.className = 'fas fa-play';
+            }
+        }
+
+        // Countdown
+        const weddingDate = new Date("April 26, 2026 10:00:00").getTime();
+        setInterval(function() {
+            const now = new Date().getTime();
+            const diff = weddingDate - now;
+            document.getElementById("days").innerText = Math.floor(diff / (1000 * 60 * 60 * 24));
+            document.getElementById("hours").innerText = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            document.getElementById("minutes").innerText = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+            document.getElementById("seconds").innerText = Math.floor((diff % (1000 * 60)) / 1000);
+        }, 1000);
+
+        // Ambil nama dari link (?to=Nama)
+        const nameTamu = new URLSearchParams(window.location.search).get('to');
+        if (nameTamu) document.getElementById('guest-name').innerText = nameTamu;
+    </script>
+</body>
+                      </html>
+                      
